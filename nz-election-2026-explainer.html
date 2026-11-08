@@ -6,6 +6,7 @@
 <title>66 | NZ Election 2026, the count isn't over</title>
 <meta name="description" content="An independent explainer of New Zealand's 2026 election: the overhang, the 66-seat majority line, and how 399,365 special votes could change the result.">
 <meta name="theme-color" content="#0a0a0b">
+<script>document.documentElement.className+=' js';</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -37,7 +38,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .skip:focus{left:8px}
 
 /* progress + nav */
-.progress{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--lime);z-index:120}
+.progress{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);background:var(--lime);z-index:120;will-change:transform}
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:18px var(--pad);mix-blend-mode:difference;color:#fff}
 .nav .logo{font-weight:800;font-size:22px;letter-spacing:-.04em;text-decoration:none}
 .nav ul{display:flex;gap:28px;list-style:none}
@@ -48,20 +49,23 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 @keyframes blink{50%{opacity:.2}}
 @media(max-width:860px){.nav ul{display:none}}
 
-/* reveals */
-.rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
-.rv.in{opacity:1;transform:none}
+/* reveals (only hidden when JS is running, and only revealed once fonts are ready) */
+.js .rv{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
 .ln{display:block;overflow:hidden;padding-bottom:.08em;margin-bottom:-.08em}
-.ln>span{display:block;transform:translateY(112%);transition:transform 1.1s var(--ease);transition-delay:var(--d,0s)}
+.js .ln>span{display:block;transform:translateY(112%);transition:transform 1.1s var(--ease);transition-delay:var(--d,0s)}
+.ln>span{display:block}
 .in .ln>span,.ln.in>span{transform:none}
 
 /* hero */
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:120px 0 40px;overflow:hidden;isolation:isolate}
-.hero::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(600px circle at var(--mx,70%) var(--my,30%),rgba(212,255,58,.10),transparent 60%)}
-.big66{position:absolute;right:-4vw;bottom:-9vw;z-index:-1;font-weight:800;line-height:.78;letter-spacing:-.07em;font-size:clamp(16rem,52vw,64rem);user-select:none;pointer-events:none;transform:translate3d(0,calc(var(--sy,0)*-.12px),0)}
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding:120px 0 40px;overflow:hidden;isolation:isolate}
+.glow{position:absolute;left:0;top:0;width:760px;height:760px;margin:-380px 0 0 -380px;z-index:-2;pointer-events:none;background:radial-gradient(circle,rgba(212,255,58,.10),transparent 60%);will-change:transform}
+.big66{position:absolute;right:-4vw;bottom:-9vw;z-index:-1;font-weight:800;line-height:.78;letter-spacing:-.07em;font-size:clamp(16rem,52vw,64rem);user-select:none;pointer-events:none;will-change:transform}
+.js .big66{opacity:0;transition:opacity 1.4s var(--ease)}
+.js.ready .big66{opacity:1}
 .big66 span{display:block}
 .big66 .o{color:transparent;-webkit-text-stroke:1.5px rgba(243,240,232,.22)}
-.big66 .f{position:absolute;inset:0;color:var(--lime);clip-path:inset(calc(100% - var(--fill,0%)) 0 0 0);opacity:.26}
+.big66 .f{position:absolute;inset:0;color:var(--lime);clip-path:inset(100% 0 0 0);opacity:.26}
 .hero h1{font-size:clamp(3.4rem,10.5vw,10.5rem);line-height:.9;letter-spacing:-.055em;font-weight:700;max-width:12ch}
 .hero h1 .serif{font-weight:400;letter-spacing:-.03em;color:var(--lime)}
 .hero .sub{margin-top:28px;max-width:46ch;font-size:clamp(1.05rem,1.6vw,1.3rem);color:#cfccc3}
@@ -74,16 +78,16 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .btn.primary:hover{background:#fff;border-color:#fff}
 .hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin-top:64px;border-top:1px solid var(--line)}
 .hero-stats div{padding:22px 20px 0 0}
-.hero-stats b{display:block;font-size:clamp(2rem,4.4vw,3.8rem);font-weight:700;letter-spacing:-.05em;line-height:1}
+.hero-stats b{display:block;font-size:clamp(2rem,4.4vw,3.8rem);font-weight:700;letter-spacing:-.05em;line-height:1;font-variant-numeric:tabular-nums}
 .hero-stats span{display:block;margin-top:8px;color:var(--mute);font-size:14px;max-width:24ch}
-@media(max-width:700px){.hero-stats{grid-template-columns:1fr;gap:0}.hero-stats div{padding:16px 0;border-bottom:1px solid var(--line)}.hero-stats{border-top:0;margin-top:44px}.hero-stats b{display:inline-block}.hero-stats span{display:inline-block;margin:0 0 0 14px}}
+@media(max-width:700px){.hero-stats{grid-template-columns:1fr;gap:0}.hero-stats div{padding:16px 0;border-bottom:1px solid var(--line)}.hero-stats{border-top:0;margin-top:44px}.hero-stats b{display:inline-block;min-width:5.6ch}.hero-stats span{display:inline-block;margin:0 0 0 14px}}
 .scrollcue{position:absolute;right:var(--pad);top:50%;writing-mode:vertical-rl;color:var(--mute);display:flex;align-items:center;gap:12px}
 .scrollcue i{width:1px;height:60px;background:linear-gradient(var(--mute),transparent);animation:drip 2.2s infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 @media(max-width:700px){.scrollcue{display:none}}
 
 /* marquee */
-.marquee{border-block:1px solid var(--line);overflow:hidden;padding:22px 0;background:var(--bg)}
+.marquee{border-block:1px solid var(--line);overflow:hidden;padding:22px 0;background:var(--bg);min-height:110px}
 .marquee .track{display:flex;width:max-content;will-change:transform}
 .marquee span{font-size:clamp(1.6rem,4vw,3.2rem);font-weight:700;letter-spacing:-.04em;white-space:nowrap;padding-right:.8em;color:var(--ink)}
 .marquee span em{font-family:var(--serif);font-weight:400;color:var(--lime)}
@@ -102,7 +106,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--lime);outline-offse
 .stage-inner{width:100%}
 .hemi-wrap{position:relative;width:100%}
 .hemi{width:100%;height:auto;display:block;overflow:visible}
-.hemi circle{r:14px;transition:transform 1s var(--ease),fill .6s,opacity .6s,stroke .6s;will-change:transform}
+.hemi circle{transition:transform 1s var(--ease),fill .6s,opacity .6s,stroke .6s;will-change:transform}
 .hemi-center{position:absolute;left:0;right:0;bottom:2%;text-align:center;pointer-events:none}
 .hemi-center b{display:block;font-size:clamp(3rem,6.2vw,5.4rem);font-weight:700;letter-spacing:-.06em;line-height:.9}
 .hemi-center span{display:block;color:var(--mute);margin-top:8px}
@@ -223,7 +227,7 @@ details ul{margin:12px 0 0 18px;display:grid;gap:7px}
 /* timeline */
 .tl{position:relative;max-width:900px;margin-left:auto;padding-left:0}
 .tl-line{position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:var(--line)}
-.tl-line i{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--lime);transform-origin:top;transform:scaleY(var(--tp,0))}
+.tl-line i{position:absolute;left:0;top:0;width:100%;height:100%;background:var(--lime);transform-origin:top;transform:scaleY(0);will-change:transform}
 .tl-item{position:relative;padding:0 0 clamp(36px,6vw,64px) 56px}
 .tl-item::before{content:"";position:absolute;left:3px;top:6px;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--dim);transition:all .5s}
 .tl-item.done::before{background:var(--lime);border-color:var(--lime)}
@@ -252,7 +256,7 @@ footer{border-top:1px solid var(--line);padding:clamp(60px,9vw,120px) 0 40px;ove
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
-  .rv,.ln>span{opacity:1;transform:none}
+  .js .rv,.js .ln>span{opacity:1;transform:none}
 }
 </style>
 </head>
@@ -272,6 +276,7 @@ footer{border-top:1px solid var(--line);padding:clamp(60px,9vw,120px) 0 40px;ove
 </nav>
 
 <header class="hero" id="top">
+  <div class="glow" id="glow" aria-hidden="true"></div>
   <div class="big66" aria-hidden="true"><span class="o">66</span><span class="f">66</span></div>
   <div class="wrap">
     <div class="eyebrow mono rv"><span>NZ Election 2026</span><i></i><span>Updated 8 November</span></div>
@@ -454,7 +459,7 @@ footer{border-top:1px solid var(--line);padding:clamp(60px,9vw,120px) 0 40px;ove
     </div>
     <div class="countdown rv"><b id="cd">--</b><span id="cdText">days until the official result is expected.</span></div>
     <div class="tl" id="tl">
-      <div class="tl-line"><i></i></div>
+      <div class="tl-line"><i id="tlFill"></i></div>
 
       <div class="tl-item" data-date="2026-11-07T20:00:00+13:00">
         <span class="when mono">Sat 7 Nov</span>
@@ -746,18 +751,36 @@ const words=['399,365 special votes','<em>131</em> seats','11 overhang seats','6
 let html='';for(let r=0;r<4;r++)words.forEach((w,i)=>{html+='<span class="'+(i%2?'ol':'')+'">'+w+'</span>'});
 marq.innerHTML=html;
 
-/* ---------- Reveals, counters ---------- */
-const rvObs=new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}})},{threshold:.15,rootMargin:'0px 0px -6% 0px'});
-$$('.rv,.sec-head h2,.hero h1').forEach(el=>rvObs.observe(el));
-// h2/h1 use .ln spans; mark container when seen
+/* ---------- Counters ---------- */
 function countUp(el){
   const to=+el.dataset.count,fm=el.dataset.fmt;
   if(reduce){el.textContent=fm?fmt(to):to;return}
   const t0=performance.now(),dur=1600;
   (function f(t){const k=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-k,4),v=Math.round(to*e);el.textContent=fm?fmt(v):v;if(k<1)requestAnimationFrame(f)})(t0);
 }
-const cObs=new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){countUp(e.target);o.unobserve(e.target)}})},{threshold:.6});
-$$('[data-count]').forEach(el=>{el.textContent=el.dataset.fmt?'0':'0';cObs.observe(el)});
+$$('[data-count]').forEach(el=>{el.textContent='0'});
+
+/* ---------- Start intro only once fonts are ready (prevents the load shudder) ---------- */
+let started=false;
+function start(){
+  if(started)return;started=true;
+  document.documentElement.classList.add('ready');
+  const rvObs=new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');o.unobserve(e.target)}})},{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+  $$('.rv,.sec-head h2,.hero h1').forEach(el=>rvObs.observe(el));
+  const cObs=new IntersectionObserver((es,o)=>{es.forEach(e=>{if(e.isIntersecting){countUp(e.target);o.unobserve(e.target)}})},{threshold:.6});
+  $$('[data-count]').forEach(el=>cObs.observe(el));
+}
+function fontsReady(){
+  if(!document.fonts||!document.fonts.load)return Promise.resolve();
+  const loads=Promise.all([
+    document.fonts.load('700 1em "Inter Tight"'),
+    document.fonts.load('800 1em "Inter Tight"'),
+    document.fonts.load('italic 400 1em "Instrument Serif"'),
+    document.fonts.load('400 1em "DM Mono"')
+  ]).catch(()=>{});
+  return Promise.race([loads,new Promise(r=>setTimeout(r,1800))]);
+}
+fontsReady().then(()=>requestAnimationFrame(()=>requestAnimationFrame(start)));
 
 /* ---------- Timeline ---------- */
 const NOW=new Date();
@@ -774,23 +797,42 @@ items.forEach(it=>{
   else{cd.textContent='0';tx.innerHTML='The official result was due on 27 November. Check <a href="https://elections.nz" target="_blank" rel="noopener">elections.nz</a> for the final numbers.'}
 })();
 
-/* ---------- Scroll loop ---------- */
-const prog=$('#progress'),hero=$('.hero'),tl=$('#tl');
-let ticking=false;
+/* ---------- Scroll loop (writes only transforms and clip-paths on single elements) ---------- */
+const prog=$('#progress'),hero=$('.hero'),tl=$('#tl'),big=$('.big66'),bigFill=$('.big66 .f'),tlFill=$('#tlFill'),glow=$('#glow');
+let ticking=false,heroH=0,marqW=0;
+function measure(){heroH=hero.offsetHeight;marqW=marq.scrollWidth/4}
 function onScroll(){
   const y=scrollY,max=document.documentElement.scrollHeight-innerHeight;
   prog.style.transform='scaleX('+(max>0?y/max:0)+')';
-  const hh=hero.offsetHeight;
-  hero.style.setProperty('--sy',y);
-  hero.style.setProperty('--fill',Math.min(100,Math.max(0,y/(hh*.85)*100))+'%');
-  if(!reduce)marq.style.transform='translate3d('+(-(y*.45)%(marq.scrollWidth/4))+'px,0,0)';
-  const r=tl.getBoundingClientRect(),p=(innerHeight*.6-r.top)/r.height;
-  tl.style.setProperty('--tp',Math.min(1,Math.max(0,p)));
+  if(heroH&&y<heroH*1.3){
+    big.style.transform='translate3d(0,'+(-y*.12).toFixed(1)+'px,0)';
+    bigFill.style.clipPath='inset('+(100-Math.min(100,y/(heroH*.85)*100)).toFixed(1)+'% 0 0 0)';
+  }
+  if(!reduce&&marqW)marq.style.transform='translate3d('+(-(y*.45)%marqW).toFixed(1)+'px,0,0)';
+  const r=tl.getBoundingClientRect();
+  if(r.top<innerHeight*1.2&&r.bottom>-200){
+    tlFill.style.transform='scaleY('+Math.min(1,Math.max(0,(innerHeight*.6-r.top)/r.height)).toFixed(3)+')';
+  }
   ticking=false;
 }
-addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
-addEventListener('resize',onScroll);onScroll();
-if(!reduce){hero.addEventListener('pointermove',e=>{const b=hero.getBoundingClientRect();hero.style.setProperty('--mx',(e.clientX-b.left)+'px');hero.style.setProperty('--my',(e.clientY-b.top)+'px')})}
+function request(){if(!ticking){ticking=true;requestAnimationFrame(onScroll)}}
+addEventListener('scroll',request,{passive:true});
+addEventListener('resize',()=>{measure();request()});
+measure();onScroll();
+// re-measure once fonts and images settle
+addEventListener('load',()=>{measure();request()});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{measure();request()});
+
+/* ---------- Hero glow follows the pointer (no layout, no style recalc) ---------- */
+function placeGlow(x,y){glow.style.transform='translate3d('+x.toFixed(0)+'px,'+y.toFixed(0)+'px,0)'}
+placeGlow(hero.clientWidth*.7,hero.clientHeight*.3);
+if(!reduce){
+  let gx=0,gy=0,gp=false;
+  hero.addEventListener('pointermove',e=>{
+    const b=hero.getBoundingClientRect();gx=e.clientX-b.left;gy=e.clientY-b.top;
+    if(!gp){gp=true;requestAnimationFrame(()=>{placeGlow(gx,gy);gp=false})}
+  },{passive:true});
+}
 })();
 </script>
 </body>
